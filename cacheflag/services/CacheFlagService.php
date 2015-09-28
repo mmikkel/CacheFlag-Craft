@@ -148,7 +148,7 @@ class CacheFlagService extends BaseApplicationComponent
 		$flags = [];
 		foreach ($result as $row)
     	{
-    		$rowFlags = craft()->cacheTag->sanitizeflags($row['flags']);
+    		$rowFlags = craft()->cacheFlag->sanitizeflags($row['flags']);
     		if (strlen($rowFlags) > 0)
     		{
     			$flags = array_merge($flags, explode(',', $rowFlags));

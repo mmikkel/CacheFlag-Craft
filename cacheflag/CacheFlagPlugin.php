@@ -14,7 +14,7 @@
 class CacheFlagPlugin extends BasePlugin
 {
 
-    protected   $_version = '1.0',
+    protected   $_version = '1.0.1',
 				$_name = 'Cache Flag',
 				$_url = 'https://github.com/mmikkel/CacheFlag-Craft',
 				$_minVersion = '2.4',
@@ -108,7 +108,7 @@ class CacheFlagPlugin extends BasePlugin
 	// Event handlers
 	public function onSaveElement(Event $event)
 	{
-		craft()->cacheFlag->deleteTaggedCachesByElement($event->params['element']);
+		craft()->cacheFlag->deleteFlaggedCachesByElement($event->params['element']);
 	}
 
 	public function onBeforeDeleteElements(Event $event)
@@ -119,7 +119,7 @@ class CacheFlagPlugin extends BasePlugin
 		{
 			if ($element = craft()->elements->getElementById($elementId))
 			{
-				craft()->cacheFlag->deleteTaggedCachesByElement($element);
+				craft()->cacheFlag->deleteFlaggedCachesByElement($element);
 			}
 		}
 	}
