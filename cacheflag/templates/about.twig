@@ -1,0 +1,74 @@
+{% extends '_layouts/cp' %}
+
+{% set title = craft.cacheFlag.getPluginName | t %}
+{% set tabs = craft.cacheFlag.getCpTabs %}
+{% set selectedTab = 'about' %}
+
+{% block content %}
+
+	<div class="cacheFlag-aboutPage">
+
+		<h2 class="cacheFlag-title">{{ 'About Cache Flag' | t }} <strong class="cacheFlag-version">v. {{ craft.cacheFlag.version }}</strong></h2>
+
+		<p><a href="{{ craft.cacheFlag.getPluginUrl }}">{{ craft.cacheFlag.getPluginUrl }}</a></p>
+
+		<h3>What is it?</h3>
+		<p>Cache Flag adds a new <code>{{'{% cacheflag %}'|raw}}</code> template tag to Twig, which – like P&T's Cold Cache plugin – <em>doesn't create element queries</em> for automatic cache breaking. In its place, Cache Flag adds <em>flags</em> to your caches, giving you granular control of when a particular cache should be cleared.</p>
+
+		<p>Cache Flag draws inspiration from the excellent <a href="http://www.causingeffect.com/software/expressionengine/ce-cache">CE Cache</a> plugin for ExpressionEngine, which implements _tags_ in a similar manner.</p>
+
+		<h3>But why?</h3>
+		<p>The native <code>{{'{% cache %}'|raw}}</code> tag is great, but in some cases the element queries Craft creates to clear its caches can become too complex (or just too many!) – which can bog down your system. Cache Flag provides an alternative (and in most cases, more performant) way to have your caches cleared automatically when your content changes.</p>
+
+		<h3>...and how?</h3>
+		<p><em>An example:</em> Let's say you have section called "Awesome Stuff", and there's a cache that you want to clear every time an entry in that section is published, edited or deleted. First, you add the flag "awesome" to the Awesome Stuff section in Cache Flag. Then, you flag the cache(s) you want to clear with "awesome" in your template, using Cache Flag's <em>flagged</em> parameter:</p>
+
+		<p>
+            <code class="code">
+                {{ '{% cacheflag flagged "awesome" %}'|raw }}<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+                {{ '{% endcacheflag %}'|raw }}
+            </code><br/>
+        </p>
+
+        <p>Success!</p>
+
+        <p>Now, suppose you also want to have the above cache cleared whenever a category in a particular category group is published or deleted. You could add the flag "awesome" to the category group as well, or you could add another flag to it entirely, e.g. "radical". Then, you'd use a pipe delimiter to specify multiple flags in your template:</p>
+
+		<p>
+            <code class="code">
+                {{ '{% cacheflag flagged "awesome|radical" %}'|raw }}<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+                {{ '{% endcacheflag %}'|raw }}
+            </code><br/>
+        </p>
+
+        <p>Beyond the <code>flagged</code> parameter, the <code>{{'{% cacheflag %}'|raw}}</code> tag <em>supports all the same parameters</em> as the native <code>{{'{% cache %}'|raw}}</code> tag – so I'll just refer to <a href="http://buildwithcraft.com/docs/templating/cache">the official documentation for the latter</a>.</p>
+
+		<hr />
+
+		<section>
+
+			<h3 class="cacheFlag-title">{{ 'Changelog' | t }}</h3>
+
+			<h5>Version 1.0 - 09.26.15</h5>
+			<ul>
+				<li>Initial public release</li>
+			</ul>
+
+		</section>
+
+		<hr />
+
+		<section>
+			<h3 class="cacheFlag-title">{{ 'Disclaimer' | t }}</h3>
+			<p>Cache Flag is provided free of charge. The author is not responsible for any data loss or other problems resulting from the use of this plugin.</p>
+			<p>Please report any bugs, feature requests or other issues <a href="{{ craft.cacheFlag.getPluginUrl }}">here</a>. As Cache Flag is a hobby project, no promises are made regarding response time, feature implementations or bug amendments.</p>
+			<p><strong>Pull requests are very welcome!</strong></p>
+		</section>
+
+	</div>
+
+	{% include 'cacheFlag/_partials/footer.twig' %}
+
+{% endblock %}
