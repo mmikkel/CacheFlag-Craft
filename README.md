@@ -16,23 +16,22 @@ The basic concept is that you add one or more flags (basically just strings, cou
 
 Let's say you have section called "Awesome Stuff", and there's a cache that you want to clear every time content in that section changes. First, you add the flag ```awesome``` to the Awesome Stuff section in Cache Flag. Then, you flag the cache(s) you want to clear with ```awesome``` in your template, using Cache Flag's ```flagged``` parameter:  
 
-
-    ```jinja
-        {% cacheflag flagged "awesome" %}  
-            ...  
-        {% endcacheflag %}
-    ```
+```jinja
+{% cacheflag flagged "awesome" %}
+    ...
+{% endcacheflag %}
+```
 
 Now, whenever an entry in the Awesome Stuff section is saved or deleted, the above cache will be cleared.  
 
 Suppose you also want to have the above cache cleared whenever a _category_ in a particular category group is published or deleted. You could add the flag ```awesome``` to the relevant category group as well, or you could add another flag to it entirely, e.g. ```radical```. You can use a pipe delimiter to specify multiple flags in your template:  
 
 
-    ```jinja
-        {% cacheflag flagged "awesome|radical" %}
-           ...
-        {% endcacheflag %}
-    ```
+```jinja
+{% cacheflag flagged "awesome|radical" %}
+    ...
+{% endcacheflag %}
+```
   
 
 Beyond the ```flagged``` parameter, the ```{% cacheflag %}``` tag _supports all the same parameters_ as the native ```{% cache %}``` tag – so I'll just refer to [the official documentation for the latter](http://buildwithcraft.com/docs/templating/cache).  
