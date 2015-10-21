@@ -100,6 +100,6 @@ class CacheFlag_TokenParser extends \Twig_TokenParser
 	 */
 	public function decideCacheEnd(\Twig_Token $token)
 	{
-		return $token->test('endcachetag');
+		return $token->test('endcacheflag');
 	}
 }

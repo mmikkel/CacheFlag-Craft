@@ -33,6 +33,7 @@ class CacheFlag_Node extends \Twig_Node
 		$durationUnit = $this->getAttribute('durationUnit');
 		$expiration = $this->getNode('expiration');
 		$global = $this->getAttribute('global') ? 'true' : 'false';
+		$flags = $this->getNode('flags');
 
 		$compiler
 			->addDebugInfo($this)
@@ -124,11 +125,18 @@ class CacheFlag_Node extends \Twig_Node
 					->raw(", \$cacheBody{$n});\n")
 				->outdent()
 				->write("}\n")
-			->outdent()
-			->write("\$cacheFlagService->addCacheByKey(\$cacheKey{$n}, ")
-			->subcompile($this->getNode('flags'))
-			->write(");\n")
+			->outdent();
+
+		if ($flags)
+		{
+			$compiler->write("\$cacheFlagService->addCacheByKey(\$cacheKey{$n}, ");
+			$compiler->subcompile($flags);
+			$compiler->write(");\n");
+		}
+
+		$compiler
 			->write("}\n")
 			->write("echo \$cacheBody{$n};\n");
+
 	}
 }
