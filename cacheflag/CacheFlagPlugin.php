@@ -14,7 +14,7 @@
 class CacheFlagPlugin extends BasePlugin
 {
 
-    protected   $_version = '1.0.1',
+    protected   $_version = '1.0.2',
 				$_name = 'Cache Flag',
 				$_url = 'https://github.com/mmikkel/CacheFlag-Craft',
 				$_minVersion = '2.4',
@@ -82,7 +82,7 @@ class CacheFlagPlugin extends BasePlugin
 		{
             return false;
         }
-		
+
 		$this->_addEventListeners();
 		$this->_addResources();
 
