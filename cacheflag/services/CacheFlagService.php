@@ -90,14 +90,14 @@ class CacheFlagService extends BaseApplicationComponent
 
     public function deleteFlaggedCachesByElement($element)
     {
-		
+
 		$elementType = $element->elementType;
-		
+
 		// Get flagged caches for element
 		$query = craft()->db->createCommand();
 		$query->select('flags');
         $query->from('templatecaches_flags');
-        
+
         switch ($elementType) {
 			case 'Asset' :
 				$query->orWhere(array(
@@ -167,7 +167,7 @@ class CacheFlagService extends BaseApplicationComponent
 
     public function deleteFlaggedCachesByFlags($flags)
     {
-    	
+
     	$query = craft()->db->createCommand();
     	$query->select('cacheId');
     	$query->from('templatecaches_flagged');
@@ -207,18 +207,18 @@ class CacheFlagService extends BaseApplicationComponent
 
     public function deleteAllFlaggedCaches()
     {
-    	
+
     	$query = craft()->db->createCommand();
     	$query->select('cacheId');
     	$query->from('templatecaches_flagged');
-    	
+
     	$result = $query->queryAll();
-    	
+
     	if (!$result || empty($result))
     	{
     		return false;
     	}
-    	
+
     	$cacheIds = [];
     	foreach ($result as $row)
 		{
@@ -258,7 +258,7 @@ class CacheFlagService extends BaseApplicationComponent
 		$pattern = '/([a-z])([A-Z])/';
 		$r = strtolower (preg_replace_callback ($pattern, function ($a)
 		{
-			return $a[1] . ' ' . strtolower ($a[2]); 
+			return $a[1] . ' ' . strtolower ($a[2]);
 		}, $value));
 		return $r;
     }

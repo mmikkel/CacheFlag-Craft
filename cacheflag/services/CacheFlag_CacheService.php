@@ -40,8 +40,11 @@ class CacheFlag_CacheService extends BaseApplicationComponent
         try
         {
             craft()->db->createCommand()->insert('templatecaches_flagged', array(
-                'cacheId'   => $cacheId,
-                'flags'      => $flags,
+                'cacheId'           => $cacheId,
+                'flags'             => $flags,
+                'uid'               => StringHelper::UUID(),
+                'dateCreated'       => date('Y-m-d H:i:s'),
+                'dateUpdated'       => date('Y-m-d H:i:s'),
         ), false);
             if ($transaction !== null)
             {
