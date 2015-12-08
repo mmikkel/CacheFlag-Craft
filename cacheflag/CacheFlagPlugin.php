@@ -14,12 +14,16 @@
 class CacheFlagPlugin extends BasePlugin
 {
 
-    protected   $_version = '1.0.2',
+    protected   $_version = '1.0.3',
+                $_schemaVersion = '1.0',
 				$_name = 'Cache Flag',
 				$_url = 'https://github.com/mmikkel/CacheFlag-Craft',
-				$_minVersion = '2.4',
+				$_releaseFeedUrl = 'https://raw.githubusercontent.com/mmikkel/CacheFlag-Craft/master/releases.json',
+                $_documentationUrl = 'https://github.com/mmikkel/CacheFlag-Craft/blob/master/README.md',
+                $_description = 'Flag and clear template caches without element criteria.',
                 $_developer = 'Mats Mikkel Rummelhoff',
-                $_developerUrl = 'http://mmikkel.no';
+                $_developerUrl = 'http://mmikkel.no',
+                $_minVersion = '2.4';
 
 	public function getName()
 	{
@@ -31,10 +35,29 @@ class CacheFlagPlugin extends BasePlugin
 	    return $this->_version;
 	}
 
+    public function getSchemaVersion()
+    {
+        return $this->_schemaVersion;
+    }
+
 	public function getUrl()
 	{
 		return $this->_url;
 	}
+
+    public function getReleaseFeedUrl()
+    {
+        return $this->_releaseFeedUrl;
+    }
+    public function getDocumentationUrl()
+    {
+        return $this->_documentationUrl;
+    }
+
+    public function getDescription()
+    {
+        return $this->_description;
+    }
 
 	public function getDeveloper()
 	{
@@ -102,7 +125,6 @@ class CacheFlagPlugin extends BasePlugin
             return false;
         }
         craft()->templates->includeCssResource( 'cacheflag/cacheflag.css' );
-        //craft()->templates->includeJsResource( 'cacheflag/cacheflag.js' );
 	}
 
 	// Event handlers

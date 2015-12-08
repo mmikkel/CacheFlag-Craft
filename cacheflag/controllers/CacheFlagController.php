@@ -108,7 +108,7 @@ class CacheFlagController extends BaseController
 
         $flags = craft()->cacheFlag->sanitizeFlags($request->getPost('flags'));
 
-        craft()->cacheFlag->deleteTaggedCachesByFlags($tags);
+        craft()->cacheFlag->deleteFlaggedCachesByFlags($tags);
 
         craft()->userSession->setNotice(Craft::t('Cached cleared for {flags}', array(
             'flags' => str_replace(',', ', ', $flags),
