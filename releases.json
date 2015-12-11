@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.0.4",
+        "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
+        "date": "2015-12-11T10:00:00-08:00",
+        "notes": [
+            "[Fixed] Fixed an issue where saving a global set wouldnt break flagged caches"
+        ]
+    },
+    {
         "version": "1.0.3",
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2015-12-08T10:00:00-08:00",

@@ -114,7 +114,7 @@ class CacheFlagService extends BaseApplicationComponent
 					'sectionId' => $element->section->id,
 				));
 				break;
-			case 'Global Set' :
+			case 'GlobalSet' :
 				$query->orWhere(array(
 					'globalSetId' => $element->id,
 				));
