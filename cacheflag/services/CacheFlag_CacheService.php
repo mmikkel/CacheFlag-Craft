@@ -15,16 +15,21 @@ namespace Craft;
 class CacheFlag_CacheService extends BaseApplicationComponent
 {
 
-    public function addCacheByKey($key, $flags)
+    /**
+     * The current request's path, as it will be stored in the templatecaches table.
+     *
+     * @var string
+     */
+    private $_path;
+
+    public function addCacheByKey($key, $flags, $global = false)
     {
 
-        if (!$caches = $this->getTemplateCachesByKey($key))
-        {
+        if (!$caches = $this->getTemplateCachesByKey($key, $global)) {
             return false;
         }
 
-        foreach ($caches as $cache)
-        {
+        foreach ($caches as $cache) {
             $cacheId = (int) $cache['id'];
             $this->addCacheById($cacheId, $flags);
         }
@@ -37,6 +42,7 @@ class CacheFlag_CacheService extends BaseApplicationComponent
         $flags = craft()->cacheFlag->sanitizeFlags($flags);
 
         $transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
+
         try
         {
             craft()->db->createCommand()->insert('templatecaches_flagged', array(
@@ -62,14 +68,58 @@ class CacheFlag_CacheService extends BaseApplicationComponent
 
     }
 
-    public function getTemplateCachesByKey($key)
+    public function getTemplateCachesByKey($key, $global = false)
     {
+        $args = array(
+            'cacheKey' => $key,
+        );
+        if (!$global) {
+            $args['path'] = $this->_getPath();
+        }
         $query = craft()->db->createCommand();
         $query->from('templatecaches');
-        $query->where(array(
-            'cacheKey' => $key,
-    ));
+        $query->where($args);
         return $query->queryAll();
+    }
+
+    /**
+     * Returns the current request path, including a "site:" or "cp:" prefix.
+     *
+     * @return string
+     */
+    private function _getPath()
+    {
+        if (!isset($this->_path))
+        {
+            if (craft()->request->isCpRequest())
+            {
+                $this->_path = 'cp:';
+            }
+            else
+            {
+                $this->_path = 'site:';
+            }
+
+            $this->_path .= craft()->request->getPath();
+
+            if (($pageNum = craft()->request->getPageNum()) != 1)
+            {
+                $this->_path .= '/'.craft()->config->get('pageTrigger').$pageNum;
+            }
+
+            // Get the querystring without the path param.
+            if ($queryString = craft()->request->getQueryStringWithoutPath())
+            {
+                $queryString = trim($queryString, '&');
+
+                if ($queryString)
+                {
+                    $this->_path .= '?'.$queryString;
+                }
+            }
+        }
+
+        return $this->_path;
     }
 
 }

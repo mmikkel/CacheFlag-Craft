@@ -80,11 +80,59 @@ class CacheFlagService extends BaseApplicationComponent
 				throw $e;
 			}
 
-			return true;
+			return $model;
 
 		}
 
 		return false;
+
+    }
+
+    public function getFlagsById($id)
+    {
+        $record = CacheFlag_FlagsRecord::model()->findById((int)$id);
+        return $record ? CacheFlagModel::populateModel($record) : null;
+    }
+
+    public function deleteFlagsById($id)
+    {
+
+        $flags = $this->getFlagsById($id);
+
+        if (!$flags) {
+            return false;
+        }
+
+        if ($flags->flags !== null) {
+            $this->deleteFlaggedCachesByFlags($flags);
+        }
+
+        $record = CacheFlag_FlagsRecord::model()->findById((int)$id);
+
+        if (!$record) {
+            return false;
+        }
+
+        $transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
+
+        try {
+
+            $record->delete();
+
+            if ($transaction !== null) {
+                $transaction->commit();
+            }
+
+        } catch (\Exception $e) {
+
+            if ($transaction !== null) {
+                $transaction->rollback();
+            }
+
+            throw $e;
+        }
+
+        return true;
 
     }
 
@@ -168,18 +216,23 @@ class CacheFlagService extends BaseApplicationComponent
     public function deleteFlaggedCachesByFlags($flags)
     {
 
-    	$query = craft()->db->createCommand();
-    	$query->select('cacheId');
-    	$query->from('templatecaches_flagged');
-
-    	if (!is_array($flags))
+    	if (is_string($flags))
     	{
-    		$flags = explode(',', $flags);
+            $flags = explode(',', $flags);
     	}
+
+        if (!is_array($flags))
+        {
+            return false;
+        }
+
+        $query = craft()->db->createCommand();
+        $query->select('cacheId');
+        $query->from('templatecaches_flagged');
 
     	foreach ($flags as $flag)
     	{
-    		$query->orWhere('FIND_IN_SET("' . $flag . '",flags)');
+    		$query->orWhere('FIND_IN_SET("'.$flag.'",flags)');
     	}
 
     	$result = $query->queryAll();

@@ -1,4 +1,4 @@
-# Cache Flag v. 1.0.4 plugin for Craft CMS
+# Cache Flag v. 1.1.0 plugin for Craft CMS
 
 The native ```{% cache %}``` tag is great, but in some cases the element queries Craft creates to clear the caches can become too complex, which can bog down your system. Cache Flag provides an alternative (and in most cases, more performant) way to have your caches clear automatically when your content changes.
 
@@ -38,6 +38,14 @@ Beyond the ```flagged``` parameter, the ```{% cacheflag %}``` tag _supports all 
 
 
 ### Changelog
+
+#### Version 1.1.0 – 04.06.16
+
+* The CP section now has a single Save button, and uses AJAX
+* Empty flags are now deleted from the database
+* Flagged caches using deleted flags are now cleared
+* Fixed an issue where Cache Flag would create duplicate caches
+* Fixed an issue where Cache Flag would not save flags where CSRF were enabled
 
 #### Version 1.0.4 - 12.11.15
 

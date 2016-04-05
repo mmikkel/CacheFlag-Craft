@@ -14,7 +14,7 @@
 class CacheFlagPlugin extends BasePlugin
 {
 
-    protected   $_version = '1.0.4',
+    protected   $_version = '1.1.0',
                 $_schemaVersion = '1.0',
 				$_name = 'Cache Flag',
 				$_url = 'https://github.com/mmikkel/CacheFlag-Craft',
@@ -107,7 +107,6 @@ class CacheFlagPlugin extends BasePlugin
         }
 
 		$this->_addEventListeners();
-		$this->_addResources();
 
 	}
 
@@ -117,15 +116,15 @@ class CacheFlagPlugin extends BasePlugin
 		craft()->on('elements.beforeDeleteElements', array($this, 'onBeforeDeleteElements'));
 	}
 
-	private function _addResources()
-	{
-		$segments = craft()->request->segments;
-        if (!is_array($segments) || empty($segments) || $segments[0] !== 'cacheflag')
-        {
-            return false;
-        }
-        craft()->templates->includeCssResource( 'cacheflag/cacheflag.css' );
-	}
+	// private function _addResources()
+	// {
+	// 	$segments = craft()->request->segments;
+ //        if (!is_array($segments) || empty($segments) || $segments[0] !== 'cacheflag')
+ //        {
+ //            return false;
+ //        }
+ //        craft()->templates->includeCssResource( 'cacheflag/cacheflag.css' );
+	// }
 
 	// Event handlers
 	public function onSaveElement(Event $event)

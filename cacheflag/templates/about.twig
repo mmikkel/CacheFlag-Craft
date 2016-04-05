@@ -51,6 +51,16 @@
 
 			<h3 class="cacheFlag-title">{{ 'Changelog' | t }}</h3>
 
+            <h4>Version 1.1.0 - 04.06.16</h4>
+
+            <ul>
+                <li>The CP section now has a single Save button, and uses AJAX</li>
+                <li>Empty flags are now deleted from the database</li>
+                <li>Flagged caches using deleted flags are now cleared</li>
+                <li>Fixed an issue where Cache Flag would create duplicate caches</li>
+                <li>Fixed an issue where Cache Flag would not save flags where CSRF were enabled</li>
+            </ul>
+
             <h4>Version 1.0.4 - 12.11.15</h4>
 
             <ul>
@@ -94,5 +104,7 @@
 	</div>
 
 	{% include 'cacheFlag/_partials/footer.twig' %}
+
+    {% includeCssFile resourceUrl('cacheflag/cacheflag.css') %}
 
 {% endblock %}

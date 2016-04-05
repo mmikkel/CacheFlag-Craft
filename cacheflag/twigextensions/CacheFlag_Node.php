@@ -39,7 +39,7 @@ class CacheFlag_Node extends \Twig_Node
 			->addDebugInfo($this)
 			->write("\$cacheService = \Craft\craft()->templateCache;\n")
 			->write("\$cacheFlagService = \Craft\craft()->cacheFlag_cache;\n")
-			->write("\$ignoreCacheTag{$n} = (\Craft\craft()->request->isLivePreview() || \Craft\craft()->request->getToken()");
+			->write("\$ignoreCacheFlag{$n} = (\Craft\craft()->request->isLivePreview() || \Craft\craft()->request->getToken()");
 
 		if ($conditions)
 		{
@@ -58,7 +58,7 @@ class CacheFlag_Node extends \Twig_Node
 
 		$compiler
 			->raw(");\n")
-			->write("if (!\$ignoreCacheTag{$n}) {\n")
+			->write("if (!\$ignoreCacheFlag{$n}) {\n")
 			->indent()
 				->write("\$cacheKey{$n} = ");
 
@@ -81,7 +81,7 @@ class CacheFlag_Node extends \Twig_Node
 				->write("ob_start();\n")
 				->subcompile($this->getNode('body'))
 				->write("\$cacheBody{$n} = ob_get_clean();\n")
-				->write("if (!\$ignoreCacheTag{$n}) {\n")
+				->write("if (!\$ignoreCacheFlag{$n}) {\n")
 				->indent()
 					->write("\$cacheService->startTemplateCache(\$cacheKey{$n});\n")
 					->write("\$cacheService->endTemplateCache(\$cacheKey{$n}, {$global}, ");
@@ -131,7 +131,7 @@ class CacheFlag_Node extends \Twig_Node
 		{
 			$compiler->write("\$cacheFlagService->addCacheByKey(\$cacheKey{$n}, ");
 			$compiler->subcompile($flags);
-			$compiler->write(");\n");
+			$compiler->write(", {$global});\n");
 		}
 
 		$compiler

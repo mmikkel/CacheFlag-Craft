@@ -25,22 +25,31 @@
   top: 1px; }
 
 #cacheFlag-flagsTitle {
-  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.cacheFlag-targetTitle {
+  font-size: 16px;
 }
 
 /*
 * flags table
 *
 */
-.cacheFlag-section table {
+.cacheFlag-table {
   width: 100%;
   float: left;
   clear: both;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+}
+
+.cacheFlag-form {
+  margin-bottom: 10px;
 }
 
 .cacheFlag-header {
-  margin-bottom: 30px;
+  margin-bottom: 50px;
+  padding-top: 20px;
 }
 
 .cacheFlag-pointName {
@@ -54,7 +63,7 @@
 
 .cacheFlag-flags th,
 .cacheFlag-flags td {
-  
+
 }
 
 .cacheFlag-flagsInput input {

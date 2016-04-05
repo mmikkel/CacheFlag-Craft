@@ -1,5 +1,17 @@
 [
     {
+        "version": "1.1.0",
+        "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
+        "date": "2016-04-06T10:00:00-08:00",
+        "notes": [
+            "[Improved] The CP section now has a single Save button, and uses AJAX",
+            "[Improved] Empty flags are now deleted from the database",
+            "[Improved] Flagged caches using deleted flags are now cleared",
+            "[Fixed] Fixed an issue where Cache Flag would create duplicate caches",
+            "[Fixed] Fixed an issue where Cache Flag would not save flags where CSRF were enabled"
+        ]
+    },
+    {
         "version": "1.0.4",
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2015-12-11T10:00:00-08:00",

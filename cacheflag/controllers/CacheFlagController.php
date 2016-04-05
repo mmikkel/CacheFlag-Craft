@@ -63,32 +63,79 @@ class CacheFlagController extends BaseController
 		$this->requirePostRequest();
         $request = craft()->request;
 
-        $model = new CacheFlagModel();
-        $model->id = $request->getPost('flagId');
-        $model->flags = craft()->cacheFlag->sanitizeFlags($request->getPost('flags'));
+        $flags = $request->getPost('cacheflags');
 
-        $target = $request->getPost('target');
+        $success = false;
 
-        if ($target !== 'elementType')
-        {
-            $targetIdProperty = $target . 'Id';
-            $model->$targetIdProperty = (int) $request->getPost('id');
+        $savedFlags = [];
+
+        foreach ($flags as $key => $flag) {
+
+            $target = @$flag['target'] ?: null;
+            $pointId = @$flag['pointId'] ?: null;
+
+            if (!$target || !$pointId) {
+                continue;
+            }
+
+            $model = new CacheFlagModel();
+            $model->id = @$flag['flagId'] ?: null;
+            $model->flags = isset($flag['flags']) ? craft()->cacheFlag->sanitizeFlags($flag['flags']) : null;
+
+            $savedFlags[$key]['flags'] = $model->flags;
+
+            if (!$model->flags) {
+                if ($model->id) {
+                    craft()->cacheFlag->deleteFlagsById($model->id);
+                }
+                continue;
+            }
+
+            if ($target !== 'elementType') {
+                $targetIdProperty = $target . 'Id';
+                $model->$targetIdProperty = (int) $pointId;
+            } else {
+                $elementType = @$flag['elementType'] ?: null;
+                if (!$elementType) {
+                    continue;
+                }
+                $model->elementType = $elementType;
+            }
+
+            $success = craft()->cacheFlag->saveFlags($model);
+
+            if ($success && $success->id) {
+
+                $savedFlags[$key]['id'] = $success->id;
+                $savedFlags[$key]['flags'] = $success->flags;
+
+            } else {
+
+                CacheFlagPlugin::log(Craft::t('CacheFlag unable to save tags for {target} "{targetName}"', array(
+                    'target' => craft()->cacheFlag->unCamelCase($target),
+                    'targetName' => Craft::t($request->getPost('targetName')),
+                )));
+
+            }
+
         }
-        else
-        {
-            $model->elementType = $request->getPost('elementType');
-        }
 
-        if (craft()->cacheFlag->saveFlags($model)) {
-            craft()->userSession->setNotice(Craft::t('Flags saved for {target} "{targetName}"', array(
-                'target' => craft()->cacheFlag->unCamelCase($target),
-                'targetName' => $request->getPost('targetName'),
-            )));
-			$this->redirectToPostedUrl($model);
+        $iCanHazAjax = craft()->request->isAjaxRequest();
+        $message = $success ? Craft::t($this->_getRandomSuccessMessage()) : Craft::t('Sorry, Cache Flag encountered some issues saving your flags. Please check your logs.');
+
+        if ($iCanHazAjax) {
+            $this->returnJson(array(
+                'success' => $success,
+                'message' => $message,
+                'flags' => $savedFlags,
+            ));
         } else {
-            craft()->userSession->setError(Craft::t('Mayday! Flags not saved for {targetName}!', array(
-                'targetName' => $request->getPost('targetName'),
-            )));
+            if ($success) {
+                craft()->userSession->setNotice($message);
+                $this->redirectToPostedUrl();
+            } else {
+                craft()->userSession->setError($message);
+            }
         }
 
 	}
@@ -103,7 +150,9 @@ class CacheFlagController extends BaseController
 
     public function actionClearCachesByFlags()
     {
+
         $this->requirePostRequest();
+
         $request = craft()->request;
 
         $flags = craft()->cacheFlag->sanitizeFlags($request->getPost('flags'));
@@ -116,6 +165,28 @@ class CacheFlagController extends BaseController
 
         $this->redirectToPostedUrl();
 
+    }
+
+    private function _getRandomSuccessMessage()
+    {
+        $messages = array(
+            "Flags saved! Good day to you.",
+            "Ahoy! All flags saved.",
+            "Flags. Saved. High five.",
+            "Flags! We haz them.",
+            "Cache flags saved, friend.",
+            "Yarr! Yer flags be safe.",
+            "Dun dun dun. All flags saved.",
+            "You are awesome. And so are your flags.",
+            "Flags, so many flags. All mine!",
+            "Flags flags flags flags",
+            "You say save, I say sure.",
+            "Before, your flags were lost. But now they are saved.",
+            "My, what beautiful flags you have.",
+            "Your flags are safe with me.",
+            "I'll just hang on to these flags for you.",
+        );
+        return $messages[array_rand($messages)];
     }
 
 }
