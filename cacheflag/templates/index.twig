@@ -28,7 +28,7 @@
                         <tbody class="cacheFlag-tableBody">
                             {% for point in points %}
                             <tr{% if point['id'] is defined %} data-id="{{ point.id }}"{% endif %} data-name="{{ point.name }}">
-                                <td scope="col" class="cacheFlag-pointName">{{ point.name }}</td>
+                                <td scope="col" class="cacheFlag-pointName">{{ point.name|t }}</td>
                                 <td scope="col" class="cacheFlag-flagsInput">
                                     {% set flagProp = point['id'] is defined ? point.id : point.classHandle %}
                                     {% set flag = cacheFlags[target][flagProp] is defined ? cacheFlags[target][flagProp] : false %}
