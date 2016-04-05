@@ -46,6 +46,8 @@ Beyond the ```flagged``` parameter, the ```{% cacheflag %}``` tag _supports all 
 * Flagged caches using deleted flags are now cleared
 * Fixed an issue where Cache Flag would create duplicate caches
 * Fixed an issue where Cache Flag would not save flags where CSRF were enabled
+* Fixed issue #2, where caches would fail to clear due to a typo
+* Fixed issue #3, where Cache Flags CP section would choke on Craft Personal & Client
 
 #### Version 1.0.4 - 12.11.15
 

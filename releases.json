@@ -8,7 +8,9 @@
             "[Improved] Empty flags are now deleted from the database",
             "[Improved] Flagged caches using deleted flags are now cleared",
             "[Fixed] Fixed an issue where Cache Flag would create duplicate caches",
-            "[Fixed] Fixed an issue where Cache Flag would not save flags where CSRF were enabled"
+            "[Fixed] Fixed an issue where Cache Flag would not save flags where CSRF were enabled",
+            "[Fixed] Fixed issue #2, where caches would fail to clear due to a typo",
+            "[Fixed] Fixed issue #3, where Cache Flags CP section would choke on Craft Personal & Client"
         ]
     },
     {
