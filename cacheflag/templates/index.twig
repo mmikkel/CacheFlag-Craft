@@ -33,6 +33,7 @@
                                     {% set flagProp = point['id'] is defined ? point.id : point.classHandle %}
                                     {% set flag = cacheFlags[target][flagProp] is defined ? cacheFlags[target][flagProp] : false %}
                                     <form method="post" accept-charset="UTF-8">
+                                        {{ getCsrfInput() }}
                                         <input type="text" class="cacheFlag-inputText text nicetext" placeholder="" name="flags" size="25" value="{{ flag ? flag.flags }}" />
                                         <input type="submit" class="cacheFlag-inputSubmit btn submit" value="{{ 'Save'|t }}" />
                                         <input type="hidden" name="action" value="cacheFlag/saveFlags">
