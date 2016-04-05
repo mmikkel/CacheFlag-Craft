@@ -28,7 +28,7 @@ class CacheFlagController extends BaseController
             'section' => craft()->sections->allSections,
             'categoryGroup' => craft()->categories->allGroups,
             'tagGroup' => craft()->tags->allTagGroups,
-            'userGroup' => craft()->userGroups->allGroups,
+            'userGroup' => craft()->edition === 2 ? craft()->userGroups->allGroups : null,
             'assetSource' => craft()->assetSources->allSources,
             'globalSet' => craft()->globals->allSets,
             'elementType' => craft()->elements->allElementTypes,
