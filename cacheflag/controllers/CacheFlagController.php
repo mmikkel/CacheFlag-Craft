@@ -74,7 +74,7 @@ class CacheFlagController extends BaseController
             $target = @$flag['target'] ?: null;
             $pointId = @$flag['pointId'] ?: null;
 
-            if (!$target || !$pointId) {
+            if (!$target) {
                 continue;
             }
 
@@ -185,6 +185,7 @@ class CacheFlagController extends BaseController
             "My, what beautiful flags you have.",
             "Your flags are safe with me.",
             "I'll just hang on to these flags for you.",
+            "If you want a symbolic gesture, don't burn the flag; save it.",
         );
         return $messages[array_rand($messages)];
     }
