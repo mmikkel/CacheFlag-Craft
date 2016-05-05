@@ -49,7 +49,7 @@
                                         <td scope="col" class="cacheFlag-flagsInput">
 
                                             {% set flagKey = point['id'] is defined ? point.id : point.classHandle %}
-                                            {% set flagInputId = target ~ (point['id'] is defined ? point.id : '') %}
+                                            {% set flagInputId = target ~ (point['id'] is defined ? point.id : point.classHandle) %}
                                             {% set flag = cacheFlags[target][flagKey] is defined ? cacheFlags[target][flagKey] : false %}
 
                                             <input type="text" data-id="{{ flagInputId }}" class="cacheFlag-inputText cacheFlag-inputFlags text nicetext" placeholder="" name="cacheflags[{{ flagInputId }}][flags]" size="25" value="{{ flag ? flag.flags }}" />
