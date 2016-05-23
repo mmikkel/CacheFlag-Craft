@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.1.2",
+        "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
+        "date": "2016-05-23T10:00:00-08:00",
+        "notes": [
+            "[Improved] Caches are now cleared for elements that have their status changed via element indexes"
+        ]
+    },
+    {
         "version": "1.1.1",
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2016-05-05T10:00:00-08:00",

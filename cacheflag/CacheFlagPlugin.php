@@ -14,7 +14,7 @@
 class CacheFlagPlugin extends BasePlugin
 {
 
-    protected   $_version = '1.1.1',
+    protected   $_version = '1.1.2',
                 $_schemaVersion = '1.0',
 				$_name = 'Cache Flag',
 				$_url = 'https://github.com/mmikkel/CacheFlag-Craft',
@@ -93,7 +93,7 @@ class CacheFlagPlugin extends BasePlugin
 	public function registerCpRoutes()
     {
         return array(
-            'cacheflag' => array( 'action' => 'cacheFlag/getIndex' ),
+            'cacheflag' => array('action' => 'cacheFlag/getIndex'),
         );
     }
 
@@ -106,27 +106,21 @@ class CacheFlagPlugin extends BasePlugin
             return false;
         }
 
-		$this->_addEventListeners();
+		$this->addEventListeners();
 
 	}
 
-	private function _addEventListeners()
+	protected function addEventListeners()
 	{
 		craft()->on('elements.saveElement', array($this, 'onSaveElement'));
 		craft()->on('elements.beforeDeleteElements', array($this, 'onBeforeDeleteElements'));
+        craft()->on('elements.performAction', array($this, 'onPerformAction'));
 	}
 
-	// private function _addResources()
-	// {
-	// 	$segments = craft()->request->segments;
- //        if (!is_array($segments) || empty($segments) || $segments[0] !== 'cacheflag')
- //        {
- //            return false;
- //        }
- //        craft()->templates->includeCssResource( 'cacheflag/cacheflag.css' );
-	// }
-
-	// Event handlers
+	/*
+    *   Event handlers
+    *
+    */
 	public function onSaveElement(Event $event)
 	{
 		craft()->cacheFlag->deleteFlaggedCachesByElement($event->params['element']);
@@ -134,7 +128,6 @@ class CacheFlagPlugin extends BasePlugin
 
 	public function onBeforeDeleteElements(Event $event)
 	{
-		// TODO: Might need to optimize this a bit.... Though mass deletions should be fairly rare so we might be OK
 		$elementIds = $event->params['elementIds'];
 		foreach ($elementIds as $elementId)
 		{
@@ -144,5 +137,23 @@ class CacheFlagPlugin extends BasePlugin
 			}
 		}
 	}
+
+    public function onPerformAction(Event $event)
+    {
+
+        $action = $event->params['action'];
+        $criteria = $event->params['criteria'];
+
+        // The actions we want to... act on.
+        $actions = array('SetStatus');
+
+        if (in_array($action->name, $actions)) {
+            $elements = $criteria->find();
+            foreach ($elements as $element) {
+                craft()->cacheFlag->deleteFlaggedCachesByElement($element);
+            }
+        }
+
+    }
 
 }

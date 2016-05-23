@@ -39,6 +39,10 @@ Beyond the ```flagged``` parameter, the ```{% cacheflag %}``` tag _supports all 
 
 ### Changelog
 
+#### Version 1.1.2 – 05.23.16
+
+* Caches are now cleared for elements that have their status changed via element indexes
+
 #### Version 1.1.1 – 05.05.16
 
 * Fixed error where elementType flags was not being saved (thanks André)
