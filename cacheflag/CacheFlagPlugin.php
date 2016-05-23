@@ -14,41 +14,42 @@
 class CacheFlagPlugin extends BasePlugin
 {
 
-    protected   $_version = '1.1.2',
-                $_schemaVersion = '1.0',
-				$_name = 'Cache Flag',
-				$_url = 'https://github.com/mmikkel/CacheFlag-Craft',
-				$_releaseFeedUrl = 'https://raw.githubusercontent.com/mmikkel/CacheFlag-Craft/master/releases.json',
-                $_documentationUrl = 'https://github.com/mmikkel/CacheFlag-Craft/blob/master/README.md',
-                $_description = 'Flag and clear template caches without element criteria.',
-                $_developer = 'Mats Mikkel Rummelhoff',
-                $_developerUrl = 'http://mmikkel.no',
-                $_minVersion = '2.4';
+    protected $_version = '1.1.2',
+        $_schemaVersion = '1.0',
+        $_name = 'Cache Flag',
+        $_url = 'https://github.com/mmikkel/CacheFlag-Craft',
+        $_releaseFeedUrl = 'https://raw.githubusercontent.com/mmikkel/CacheFlag-Craft/master/releases.json',
+        $_documentationUrl = 'https://github.com/mmikkel/CacheFlag-Craft/blob/master/README.md',
+        $_description = 'Flag and clear template caches without element criteria.',
+        $_developer = 'Mats Mikkel Rummelhoff',
+        $_developerUrl = 'http://mmikkel.no',
+        $_minVersion = '2.4';
 
-	public function getName()
-	{
-	    return $this->_name;
-	}
+    public function getName()
+    {
+        return $this->_name;
+    }
 
-	public function getVersion()
-	{
-	    return $this->_version;
-	}
+    public function getVersion()
+    {
+        return $this->_version;
+    }
 
     public function getSchemaVersion()
     {
         return $this->_schemaVersion;
     }
 
-	public function getUrl()
-	{
-		return $this->_url;
-	}
+    public function getUrl()
+    {
+        return $this->_url;
+    }
 
     public function getReleaseFeedUrl()
     {
         return $this->_releaseFeedUrl;
     }
+
     public function getDocumentationUrl()
     {
         return $this->_documentationUrl;
@@ -59,22 +60,22 @@ class CacheFlagPlugin extends BasePlugin
         return $this->_description;
     }
 
-	public function getDeveloper()
-	{
-	    return $this->_developer;
-	}
+    public function getDeveloper()
+    {
+        return $this->_developer;
+    }
 
-	public function getDeveloperUrl()
-	{
-	    return $this->_developerUrl;
-	}
+    public function getDeveloperUrl()
+    {
+        return $this->_developerUrl;
+    }
 
-	public function hasCpSection()
-	{
-		return true;
-	}
+    public function hasCpSection()
+    {
+        return true;
+    }
 
-	public function getCraftRequiredVersion()
+    public function getCraftRequiredVersion()
     {
         return $this->_minVersion;
     }
@@ -84,59 +85,56 @@ class CacheFlagPlugin extends BasePlugin
         return version_compare(craft()->getVersion(), $this->getCraftRequiredVersion(), '>=');
     }
 
-	public function addTwigExtension()
-	{
-		Craft::import('plugins.cacheflag.twigextensions.*');
-		return new CacheFlagTwigExtension();
-	}
+    public function addTwigExtension()
+    {
+        Craft::import('plugins.cacheflag.twigextensions.*');
+        return new CacheFlagTwigExtension();
+    }
 
-	public function registerCpRoutes()
+    public function registerCpRoutes()
     {
         return array(
             'cacheflag' => array('action' => 'cacheFlag/getIndex'),
         );
     }
 
-	public function init()
-	{
-		parent::init();
+    public function init()
+    {
+        parent::init();
 
-		if (!craft()->request->isCpRequest() || !$this->isCraftRequiredVersion())
-		{
+        if (!craft()->request->isCpRequest() || !$this->isCraftRequiredVersion()) {
             return false;
         }
 
-		$this->addEventListeners();
+        $this->addEventListeners();
 
-	}
+    }
 
-	protected function addEventListeners()
-	{
-		craft()->on('elements.saveElement', array($this, 'onSaveElement'));
-		craft()->on('elements.beforeDeleteElements', array($this, 'onBeforeDeleteElements'));
+    protected function addEventListeners()
+    {
+        craft()->on('elements.saveElement', array($this, 'onSaveElement'));
+        craft()->on('elements.beforeDeleteElements', array($this, 'onBeforeDeleteElements'));
         craft()->on('elements.performAction', array($this, 'onPerformAction'));
-	}
+    }
 
-	/*
+    /*
     *   Event handlers
     *
     */
-	public function onSaveElement(Event $event)
-	{
-		craft()->cacheFlag->deleteFlaggedCachesByElement($event->params['element']);
-	}
+    public function onSaveElement(Event $event)
+    {
+        craft()->cacheFlag->deleteFlaggedCachesByElement($event->params['element']);
+    }
 
-	public function onBeforeDeleteElements(Event $event)
-	{
-		$elementIds = $event->params['elementIds'];
-		foreach ($elementIds as $elementId)
-		{
-			if ($element = craft()->elements->getElementById($elementId))
-			{
-				craft()->cacheFlag->deleteFlaggedCachesByElement($element);
-			}
-		}
-	}
+    public function onBeforeDeleteElements(Event $event)
+    {
+        $elementIds = $event->params['elementIds'];
+        foreach ($elementIds as $elementId) {
+            if ($element = craft()->elements->getElementById($elementId)) {
+                craft()->cacheFlag->deleteFlaggedCachesByElement($element);
+            }
+        }
+    }
 
     public function onPerformAction(Event $event)
     {

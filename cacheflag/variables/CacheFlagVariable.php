@@ -11,42 +11,67 @@
  * @link        https://github.com/mmikkel/CacheFlag-Craft
  */
 
+/**
+ * Class CacheFlagVariable
+ * @package Craft
+ */
 class CacheFlagVariable
 {
 
+    /**
+     * @return mixed
+     */
     public function getPlugin()
-	{
-		return craft()->cacheFlag->getPlugin();
-	}
+    {
+        return craft()->cacheFlag->getPlugin();
+    }
 
-	public function getCpTabs()
-	{
-		return craft()->cacheFlag->getCpTabs();
-	}
+    /**
+     * @return mixed
+     */
+    public function getCpTabs()
+    {
+        return craft()->cacheFlag->getCpTabs();
+    }
 
-	public function getPluginUrl()
-	{
-		return $this->getPlugin()->getUrl();
-	}
+    /**
+     * @return mixed
+     */
+    public function getPluginUrl()
+    {
+        return $this->getPlugin()->getUrl();
+    }
 
-	public function getPluginName()
-	{
-		return $this->getPlugin()->getName();
-	}
+    /**
+     * @return mixed
+     */
+    public function getPluginName()
+    {
+        return $this->getPlugin()->getName();
+    }
 
-	public function version()
-	{
-		return $this->getPlugin()->getVersion();
-	}
+    /**
+     * @return mixed
+     */
+    public function version()
+    {
+        return $this->getPlugin()->getVersion();
+    }
 
-	public function requiredCraftVersion()
-	{
-		return $this->getPlugin()->getCraftRequiredVersion();
-	}
+    /**
+     * @return mixed
+     */
+    public function requiredCraftVersion()
+    {
+        return $this->getPlugin()->getCraftRequiredVersion();
+    }
 
-	public function isCraftRequiredVersion()
-	{
-		return $this->getPlugin()->isCraftRequiredVersion();
-	}
+    /**
+     * @return mixed
+     */
+    public function isCraftRequiredVersion()
+    {
+        return $this->getPlugin()->isCraftRequiredVersion();
+    }
 
 }

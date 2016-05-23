@@ -12,6 +12,10 @@ namespace Craft;
  * @link        https://github.com/mmikkel/CacheFlag-Craft
  */
 
+/**
+ * Class CacheFlag_CacheService
+ * @package Craft
+ */
 class CacheFlag_CacheService extends BaseApplicationComponent
 {
 
@@ -22,6 +26,13 @@ class CacheFlag_CacheService extends BaseApplicationComponent
      */
     private $_path;
 
+    /**
+     * @param $key
+     * @param $flags
+     * @param bool|false $global
+     * @return bool
+     * @throws \Exception
+     */
     public function addCacheByKey($key, $flags, $global = false)
     {
 
@@ -30,12 +41,17 @@ class CacheFlag_CacheService extends BaseApplicationComponent
         }
 
         foreach ($caches as $cache) {
-            $cacheId = (int) $cache['id'];
+            $cacheId = (int)$cache['id'];
             $this->addCacheById($cacheId, $flags);
         }
 
     }
 
+    /**
+     * @param $cacheId
+     * @param $flags
+     * @throws \Exception
+     */
     public function addCacheById($cacheId, $flags)
     {
 
@@ -43,31 +59,31 @@ class CacheFlag_CacheService extends BaseApplicationComponent
 
         $transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
 
-        try
-        {
+        try {
             craft()->db->createCommand()->insert('templatecaches_flagged', array(
-                'cacheId'           => $cacheId,
-                'flags'             => $flags,
-                'uid'               => StringHelper::UUID(),
-                'dateCreated'       => date('Y-m-d H:i:s'),
-                'dateUpdated'       => date('Y-m-d H:i:s'),
-        ), false);
-            if ($transaction !== null)
-            {
+                'cacheId' => $cacheId,
+                'flags' => $flags,
+                'uid' => StringHelper::UUID(),
+                'dateCreated' => date('Y-m-d H:i:s'),
+                'dateUpdated' => date('Y-m-d H:i:s'),
+            ), false);
+            if ($transaction !== null) {
                 $transaction->commit();
             }
-        }
-        catch (\Exception $e)
-        {
-             if ($transaction !== null)
-             {
-                  $transaction->rollback();
-             }
-             throw $e;
+        } catch (\Exception $e) {
+            if ($transaction !== null) {
+                $transaction->rollback();
+            }
+            throw $e;
         }
 
     }
 
+    /**
+     * @param $key
+     * @param bool|false $global
+     * @return mixed
+     */
     public function getTemplateCachesByKey($key, $global = false)
     {
         $args = array(
@@ -89,32 +105,25 @@ class CacheFlag_CacheService extends BaseApplicationComponent
      */
     private function _getPath()
     {
-        if (!isset($this->_path))
-        {
-            if (craft()->request->isCpRequest())
-            {
+        if (!isset($this->_path)) {
+            if (craft()->request->isCpRequest()) {
                 $this->_path = 'cp:';
-            }
-            else
-            {
+            } else {
                 $this->_path = 'site:';
             }
 
             $this->_path .= craft()->request->getPath();
 
-            if (($pageNum = craft()->request->getPageNum()) != 1)
-            {
-                $this->_path .= '/'.craft()->config->get('pageTrigger').$pageNum;
+            if (($pageNum = craft()->request->getPageNum()) != 1) {
+                $this->_path .= '/' . craft()->config->get('pageTrigger') . $pageNum;
             }
 
             // Get the querystring without the path param.
-            if ($queryString = craft()->request->getQueryStringWithoutPath())
-            {
+            if ($queryString = craft()->request->getQueryStringWithoutPath()) {
                 $queryString = trim($queryString, '&');
 
-                if ($queryString)
-                {
-                    $this->_path .= '?'.$queryString;
+                if ($queryString) {
+                    $this->_path .= '?' . $queryString;
                 }
             }
         }

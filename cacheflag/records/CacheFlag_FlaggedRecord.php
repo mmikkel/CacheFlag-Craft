@@ -11,30 +11,37 @@
  * @link        https://github.com/mmikkel/CacheFlag-Craft
  */
 
+/**
+ * Class CacheFlag_FlaggedRecord
+ * @package Craft
+ */
 class CacheFlag_FlaggedRecord extends BaseRecord
 {
-	public function getTableName()
-	{
-		return 'templatecaches_flagged';
-	}
-
-	/**
-	 * @access protected
-	 * @return array
-	 */
-	protected function defineAttributes()
-	{
-		return array(
-			'cacheId' => AttributeType::Number,
-			'flags' => AttributeType::String,
-		);
-	}
+    /**
+     * @return string
+     */
+    public function getTableName()
+    {
+        return 'templatecaches_flagged';
+    }
 
     /**
-	 * Creates the model's table.
-	 *
-	 * @return null
-	 */
+     * @access protected
+     * @return array
+     */
+    protected function defineAttributes()
+    {
+        return array(
+            'cacheId' => AttributeType::Number,
+            'flags' => AttributeType::String,
+        );
+    }
+
+    /**
+     * Creates the model's table.
+     *
+     * @return null
+     */
     public function createTable()
     {
         parent::createTable();

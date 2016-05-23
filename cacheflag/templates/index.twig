@@ -6,14 +6,16 @@
 
 {% set content %}
 
-	{% if craft.cacheFlag.isCraftRequiredVersion == false %}
-	<p class="error">Sorry, you need to run Craft {{ craft.cacheFlag.requiredCraftVersion }} or newer to use Cache Flag.<br/><strong>Please update your Craft installation.</strong></p>
-	{% endif %}
+    {% if craft.cacheFlag.isCraftRequiredVersion == false %}
+        <p class="error">Sorry, you need to run Craft {{ craft.cacheFlag.requiredCraftVersion }} or newer to use Cache
+            Flag.<br/><strong>Please update your Craft installation.</strong></p>
+    {% endif %}
 
     <div class="cacheFlag-flags">
 
         <header class="cacheFlag-header">
             <h2 id="cacheFlag-flagsTitle">{{ 'Flags'|t }}</h2>
+
             <p>Separate multiple flags with commas. Only alphanumeric characters allowed.</p>
         </header>
 
@@ -22,8 +24,8 @@
 
                 {{ getCsrfInput() }}
 
-                <input type="hidden" name="action" value="cacheFlag/saveFlags" />
-                <input type="hidden" name="cacheflags" value="" />
+                <input type="hidden" name="action" value="cacheFlag/saveFlags"/>
+                <input type="hidden" name="cacheflags" value=""/>
 
                 {% for target, points in targets %}
 
@@ -34,43 +36,51 @@
                         <table id="cacheFlag-{{ target }}" class="data fullwidth collapsible cacheFlag-table">
 
                             <thead class="cacheFlag-tableHeader">
-                                <th scope="col">{{ 'Name' | t }}</th>
-                                <th scope="col">{{ 'Flags' | t }}</th>
+                            <th scope="col">{{ 'Name' | t }}</th>
+                            <th scope="col">{{ 'Flags' | t }}</th>
                             </thead>
 
                             <tbody class="cacheFlag-tableBody">
 
-                                {% for point in points %}
+                            {% for point in points %}
 
-                                    <tr>
+                                <tr>
 
-                                        <td scope="col" class="cacheFlag-pointName">{{ point.name|t }}</td>
+                                    <td scope="col" class="cacheFlag-pointName">{{ point.name|t }}</td>
 
-                                        <td scope="col" class="cacheFlag-flagsInput">
+                                    <td scope="col" class="cacheFlag-flagsInput">
 
-                                            {% set flagKey = point['id'] is defined ? point.id : point.classHandle %}
-                                            {% set flagInputId = target ~ (point['id'] is defined ? point.id : point.classHandle) %}
-                                            {% set flag = cacheFlags[target][flagKey] is defined ? cacheFlags[target][flagKey] : false %}
+                                        {% set flagKey = point['id'] is defined ? point.id : point.classHandle %}
+                                        {% set flagInputId = target ~ (point['id'] is defined ? point.id : point.classHandle) %}
+                                        {% set flag = cacheFlags[target][flagKey] is defined ? cacheFlags[target][flagKey] : false %}
 
-                                            <input type="text" data-id="{{ flagInputId }}" class="cacheFlag-inputText cacheFlag-inputFlags text nicetext" placeholder="" name="cacheflags[{{ flagInputId }}][flags]" size="25" value="{{ flag ? flag.flags }}" />
+                                        <input type="text" data-id="{{ flagInputId }}"
+                                               class="cacheFlag-inputText cacheFlag-inputFlags text nicetext"
+                                               placeholder="" name="cacheflags[{{ flagInputId }}][flags]" size="25"
+                                               value="{{ flag ? flag.flags }}"/>
 
-                                            <input type="hidden" name="cacheflags[{{ flagInputId }}][target]" value="{{ target }}" />
+                                        <input type="hidden" name="cacheflags[{{ flagInputId }}][target]"
+                                               value="{{ target }}"/>
 
-                                            <input type="hidden" name="cacheflags[{{ flagInputId }}][targetName]" value="{{ point.name }}" />
+                                        <input type="hidden" name="cacheflags[{{ flagInputId }}][targetName]"
+                                               value="{{ point.name }}"/>
 
-                                            {% if point['id'] is defined %}
-                                                <input type="hidden" name="cacheflags[{{ flagInputId }}][pointId]" value="{{ point.id }}" />
-                                            {% else %}
-                                                <input type="hidden" name="cacheflags[{{ flagInputId }}][elementType]" value="{{ point.classHandle }}" />
-                                            {% endif %}
+                                        {% if point['id'] is defined %}
+                                            <input type="hidden" name="cacheflags[{{ flagInputId }}][pointId]"
+                                                   value="{{ point.id }}"/>
+                                        {% else %}
+                                            <input type="hidden" name="cacheflags[{{ flagInputId }}][elementType]"
+                                                   value="{{ point.classHandle }}"/>
+                                        {% endif %}
 
-                                            <input type="hidden" name="cacheflags[{{ flagInputId }}][flagId]" value="{{ flag.id|default }}" />
+                                        <input type="hidden" name="cacheflags[{{ flagInputId }}][flagId]"
+                                               value="{{ flag.id|default }}"/>
 
-                                        </td>
+                                    </td>
 
-                                    </tr>
+                                </tr>
 
-                                {% endfor %}
+                            {% endfor %}
                             </tbody>
                         </table>
 
@@ -78,7 +88,8 @@
 
                 {% endfor %}
 
-                <input type="submit" class="cacheFlag-inputSubmit btn submit" value="{{ 'Save all flags'|t }}" />
+                <input type="submit" class="cacheFlag-inputSubmit btn submit" value="{{ 'Save all flags'|t }}"/>
+
                 <div class="spinner hidden"></div>
 
             </form>
@@ -89,14 +100,15 @@
         <section aria-labelledby="{{ 'General'|t }}">
             <form method="post" accept-charset="UTF-8" class="cacheFlag-clearAllCachesForm">
                 {{ getCsrfInput() }}
-                <input type="submit" class="cacheFlag-inputSubmit btn submit" value="{{ 'Clear all flagged caches'|t }}" />
+                <input type="submit" class="cacheFlag-inputSubmit btn submit"
+                       value="{{ 'Clear all flagged caches'|t }}"/>
                 <input type="hidden" name="action" value="cacheFlag/clearAllCaches">
             </form>
         </section>
 
     </div>
 
-	{% include 'cacheflag/_partials/footer.twig' %}
+    {% include 'cacheflag/_partials/footer.twig' %}
 
     {% includeCssFile resourceUrl('cacheflag/cacheflag.css') %}
     {% includeJsFile resourceUrl('cacheflag/cacheflag.js') %}

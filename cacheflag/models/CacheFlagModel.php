@@ -11,26 +11,30 @@
  * @link        https://github.com/mmikkel/CacheFlag-Craft
  */
 
+/**
+ * Class CacheFlagModel
+ * @package Craft
+ */
 class CacheFlagModel extends BaseModel
 {
 
-	/**
-	 * @access protected
-	 * @return array
-	 */
-	protected function defineAttributes()
-	{
-		return array(
+    /**
+     * @access protected
+     * @return array
+     */
+    protected function defineAttributes()
+    {
+        return array(
             'id' => AttributeType::Number,
             'flags' => AttributeType::String,
-			'sectionId' => AttributeType::Number,
+            'sectionId' => AttributeType::Number,
             'categoryGroupId' => AttributeType::Number,
             'tagGroupId' => AttributeType::Number,
             'userGroupId' => AttributeType::Number,
             'assetSourceId' => AttributeType::Number,
             'globalSetId' => AttributeType::Number,
             'elementType' => AttributeType::String,
-		);
-	}
+        );
+    }
 
 }

@@ -10,8 +10,7 @@ $(function () {
         submitForm();
     }
 
-    function submitForm()
-    {
+    function submitForm() {
 
         if ($request) {
             $request.abort();
@@ -23,9 +22,9 @@ $(function () {
         $form.find('input[type="submit"]').prop('disabled', true).addClass('disabled');
 
         $request = $.ajax($form.attr('action'), {
-            data : $form.serialize(),
-            type : 'POST',
-            success : function (response) {
+            data: $form.serialize(),
+            type: 'POST',
+            success: function (response) {
                 if (response.success) {
                     Craft.cp.displayNotice(response.message);
                 } else {
@@ -33,17 +32,17 @@ $(function () {
                 }
                 if (response.flags) {
                     for (var key in response.flags) {
-                        $form.find('input[data-id="'+key+'"]').val(response.flags[key].flags);
-                        $form.find('input[name="cacheflags['+key+'][flagId]"]').val(response.flags[key].id);
+                        $form.find('input[data-id="' + key + '"]').val(response.flags[key].flags);
+                        $form.find('input[name="cacheflags[' + key + '][flagId]"]').val(response.flags[key].id);
                     }
                 }
             },
-            error : function (response) {
+            error: function (response) {
                 if (response.statusText !== 'abort') {
                     Craft.cp.displayError(response.statusText);
                 }
             },
-            complete : function () {
+            complete: function () {
                 delete $request;
                 $form.removeClass('js-submitting');
                 $form.find('.spinner').addClass('hidden');

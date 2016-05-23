@@ -11,18 +11,22 @@
  * @link        https://github.com/mmikkel/CacheFlag-Craft
  */
 
+/**
+ * Class CacheFlagController
+ * @package Craft
+ */
 class CacheFlagController extends BaseController
 {
 
-	/**
-	 * @access public
-	 * @return mixed
-	 */
-	public function actionGetIndex(array $variables = array())
-	{
+    /**
+     * @access public
+     * @return mixed
+     */
+    public function actionGetIndex(array $variables = array())
+    {
 
         $variables['tabs'] = craft()->cacheFlag->getCpTabs();
-		$variables['selectedTab'] = 'cacheFlagIndex';
+        $variables['selectedTab'] = 'cacheFlagIndex';
 
         $variables['targets'] = array(
             'section' => craft()->sections->allSections,
@@ -37,30 +41,29 @@ class CacheFlagController extends BaseController
         $variables['cacheFlags'] = [];
         $cacheFlags = craft()->cacheFlag->getFlags();
 
-        foreach ($variables['targets'] as $target => $data)
-        {
-            foreach ($cacheFlags as $cacheFlag)
-            {
-                if (!isset($variables['cacheFlags'][$target]))
-                {
+        foreach ($variables['targets'] as $target => $data) {
+            foreach ($cacheFlags as $cacheFlag) {
+                if (!isset($variables['cacheFlags'][$target])) {
                     $variables['cacheFlags'][$target] = [];
                 }
                 $targetProperty = $target !== 'elementType' ? $target . 'Id' : $target;
-                if ($cacheFlag[$targetProperty])
-                {
+                if ($cacheFlag[$targetProperty]) {
                     $variables['cacheFlags'][$target][$cacheFlag[$targetProperty]] = $cacheFlag;
                 }
             }
         }
 
-		return $this->renderTemplate('cacheFlag', $variables);
+        return $this->renderTemplate('cacheFlag', $variables);
 
-	}
+    }
 
+    /**
+     *
+     */
     public function actionSaveFlags()
-	{
+    {
 
-		$this->requirePostRequest();
+        $this->requirePostRequest();
         $request = craft()->request;
 
         $flags = $request->getPost('cacheflags');
@@ -93,7 +96,7 @@ class CacheFlagController extends BaseController
 
             if ($target !== 'elementType') {
                 $targetIdProperty = $target . 'Id';
-                $model->$targetIdProperty = (int) $pointId;
+                $model->$targetIdProperty = (int)$pointId;
             } else {
                 $elementType = @$flag['elementType'] ?: null;
                 if (!$elementType) {
@@ -138,8 +141,11 @@ class CacheFlagController extends BaseController
             }
         }
 
-	}
+    }
 
+    /**
+     *
+     */
     public function actionClearAllCaches()
     {
         $this->requirePostRequest();
@@ -148,6 +154,9 @@ class CacheFlagController extends BaseController
         $this->redirectToPostedUrl();
     }
 
+    /**
+     *
+     */
     public function actionClearCachesByFlags()
     {
 
@@ -167,6 +176,9 @@ class CacheFlagController extends BaseController
 
     }
 
+    /**
+     * @return mixed
+     */
     private function _getRandomSuccessMessage()
     {
         $messages = array(

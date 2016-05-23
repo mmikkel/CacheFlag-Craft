@@ -3,33 +3,34 @@
 *
 */
 .tab#tab-cacheFlagIndex:before {
-  content: "home";
-  font-family: 'Craft';
-  speak: none;
-  -webkit-font-feature-settings: "liga", "dlig";
-     -moz-font-feature-settings: "liga", "dlig";
-          font-feature-settings: "liga", "dlig";
-  text-rendering: optimizeLegibility;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  -webkit-font-smoothing: anti-aliased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  word-wrap: normal !important;
-  line-height: 1;
-  position: relative;
-  top: 1px; }
+    content: "home";
+    font-family: 'Craft';
+    speak: none;
+    -webkit-font-feature-settings: "liga", "dlig";
+    -moz-font-feature-settings: "liga", "dlig";
+    font-feature-settings: "liga", "dlig";
+    text-rendering: optimizeLegibility;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: anti-aliased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    word-wrap: normal !important;
+    line-height: 1;
+    position: relative;
+    top: 1px;
+}
 
 #cacheFlag-flagsTitle {
-  font-size: 18px;
+    font-size: 18px;
 }
 
 .cacheFlag-targetTitle {
-  font-size: 16px;
+    font-size: 16px;
 }
 
 /*
@@ -37,28 +38,28 @@
 *
 */
 .cacheFlag-table {
-  width: 100%;
-  float: left;
-  clear: both;
-  margin-bottom: 40px;
+    width: 100%;
+    float: left;
+    clear: both;
+    margin-bottom: 40px;
 }
 
 .cacheFlag-form {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .cacheFlag-header {
-  margin-bottom: 50px;
-  padding-top: 20px;
+    margin-bottom: 50px;
+    padding-top: 20px;
 }
 
 .cacheFlag-pointName {
-  width: 30%;
+    width: 30%;
 }
 
 .cacheFlag-flagsInput form {
-  display: inline-block;
-  margin-right: 5px;
+    display: inline-block;
+    margin-right: 5px;
 }
 
 .cacheFlag-flags th,
@@ -67,26 +68,26 @@
 }
 
 .cacheFlag-flagsInput input {
-  margin-right: 5px;
+    margin-right: 5px;
 }
 
 .cacheFlag-flagsInput .btn {
-  width: auto;
-  float: left;
-  margin-bottom: 5px;
+    width: auto;
+    float: left;
+    margin-bottom: 5px;
 }
 
 .cacheFlag-flagsInput input.text {
-  width: auto;
-  float: left;
-  font-family: Menlo, monospace;
-  font-size: 0.9em;
-  margin-bottom: 5px;
+    width: auto;
+    float: left;
+    font-family: Menlo, monospace;
+    font-size: 0.9em;
+    margin-bottom: 5px;
 }
 
 .cacheFlag-clearCachesByFlagsForm .submit,
 .cacheFlag-clearAllCachesForm .submit {
-  background-color: #333F4D;
+    background-color: #333F4D;
 }
 
 /*
@@ -94,17 +95,19 @@
 *
 */
 .cacheFlag-aboutPage td.desc {
-  color: rgba(0, 0, 0, 0.5); }
+    color: rgba(0, 0, 0, 0.5);
+}
 
 /*
 *  CP section footer
 *
 */
 #cacheFlag-colophone {
-  width: 100%;
-  float: left;
-  clear: both;
-  font-size: 11px;
-  color: #8f98a3;
-  text-align: right;
-  margin-top: 20px; }
+    width: 100%;
+    float: left;
+    clear: both;
+    font-size: 11px;
+    color: #8f98a3;
+    text-align: right;
+    margin-top: 20px;
+}
