@@ -63,7 +63,7 @@ $(function () {
             $target = $(e.currentTarget),
             flags = $target.data('emptycache');
 
-        if (!flags || flags == '') return false;
+        if ($target.hasClass('disabled') || !flags || flags == '') return false;
 
         $.ajax(actionUrl, {
             type : 'POST',
@@ -83,10 +83,7 @@ $(function () {
                 }
             },
             complete: function () {
-                $target.addClass('disabled').removeAttr('data-emptycache');
-                // $form.removeClass('js-submitting');
-                // $form.find('.spinner').addClass('hidden');
-                // $form.find('input[type="submit"]').prop('disabled', false).removeClass('disabled');
+                $target.addClass('disabled');
             }
         });
 

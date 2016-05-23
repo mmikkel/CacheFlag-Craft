@@ -81,7 +81,7 @@
 
                                     <td scope="col" class="cacheFlag-flagsActions">
                                         {% set flagHasCaches = flag and craft.cacheFlag.flagsHasCaches(flag.flags) %}
-                                        <button class="btn submit{{ not flagHasCaches ? ' disabled' }}"{% if flagHasCaches %} data-emptycache="{{ flag.flags }}"{% endif %}>{{ 'Empty caches'|t }}</button>
+                                        <button class="btn submit{{ not flagHasCaches ? ' disabled' }}" data-emptycache="{{ flag and flag.flags ? flag.flags }}">{{ 'Empty caches'|t }}</button>
                                     </td>
 
                                 </tr>
