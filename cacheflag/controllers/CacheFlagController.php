@@ -168,7 +168,7 @@ class CacheFlagController extends BaseController
 
         craft()->cacheFlag->deleteFlaggedCachesByFlags($flags);
 
-        $message = Craft::t('Cached cleared for {flags}', array(
+        $message = Craft::t('Caches cleared for {flags}', array(
             'flags' => str_replace(',', ', ', $flags),
         ));
 
