@@ -74,4 +74,13 @@ class CacheFlagVariable
         return $this->getPlugin()->isCraftRequiredVersion();
     }
 
+    /**
+     * @param string $flags
+     * @return mixed
+     */
+    public function flagsHasCaches($flags = '')
+    {
+        return craft()->cacheFlag->flagsHasCaches($flags);
+    }
+
 }

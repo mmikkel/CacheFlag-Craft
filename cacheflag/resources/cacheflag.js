@@ -1,9 +1,11 @@
 $(function () {
 
     var $form = $('.cacheFlag-form'),
-        $request = null;
+        $submitRequest = null;
 
     $form.on('submit', onFormSubmit);
+
+    $form.on('click', '[data-emptycache]', clearCaches);
 
     function onFormSubmit(e) {
         e.preventDefault();
@@ -12,8 +14,8 @@ $(function () {
 
     function submitForm() {
 
-        if ($request) {
-            $request.abort();
+        if ($submitRequest) {
+            $submitRequest.abort();
         }
 
         $form.addClass('js-submitting');
@@ -21,7 +23,7 @@ $(function () {
 
         $form.find('input[type="submit"]').prop('disabled', true).addClass('disabled');
 
-        $request = $.ajax($form.attr('action'), {
+        $submitRequest = $.ajax($form.attr('action'), {
             data: $form.serialize(),
             type: 'POST',
             success: function (response) {
@@ -43,10 +45,48 @@ $(function () {
                 }
             },
             complete: function () {
-                delete $request;
+                delete $submitRequest;
                 $form.removeClass('js-submitting');
                 $form.find('.spinner').addClass('hidden');
                 $form.find('input[type="submit"]').prop('disabled', false).removeClass('disabled');
+            }
+        });
+
+    }
+
+    function clearCaches(e)
+    {
+
+        e.preventDefault();
+
+        var actionUrl = Craft.getActionUrl('cacheFlag/clearCachesByFlags'),
+            $target = $(e.currentTarget),
+            flags = $target.data('emptycache');
+
+        if (!flags || flags == '') return false;
+
+        $.ajax(actionUrl, {
+            type : 'POST',
+            data : {
+                flags : flags
+            },
+            success: function (response) {
+                if (response.success) {
+                    Craft.cp.displayNotice(response.message);
+                } else {
+                    Craft.cp.displayError(response.message);
+                }
+            },
+            error: function (response) {
+                if (response.statusText !== 'abort') {
+                    Craft.cp.displayError(response.statusText);
+                }
+            },
+            complete: function () {
+                $target.addClass('disabled').removeAttr('data-emptycache');
+                // $form.removeClass('js-submitting');
+                // $form.find('.spinner').addClass('hidden');
+                // $form.find('input[type="submit"]').prop('disabled', false).removeClass('disabled');
             }
         });
 

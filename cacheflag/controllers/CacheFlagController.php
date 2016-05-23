@@ -168,11 +168,20 @@ class CacheFlagController extends BaseController
 
         craft()->cacheFlag->deleteFlaggedCachesByFlags($flags);
 
-        craft()->userSession->setNotice(Craft::t('Cached cleared for {flags}', array(
+        $message = Craft::t('Cached cleared for {flags}', array(
             'flags' => str_replace(',', ', ', $flags),
-        )));
+        ));
 
-        $this->redirectToPostedUrl();
+        if (craft()->request->isAjaxRequest()) {
+            $this->returnJson(array(
+                'success' => true,
+                'flags' => $flags,
+                'message' => $message,
+            ));
+        } else {
+            craft()->userSession->setNotice();
+            $this->redirectToPostedUrl();
+        }
 
     }
 

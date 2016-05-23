@@ -249,7 +249,7 @@ class CacheFlagService extends BaseApplicationComponent
             $flags = explode(',', $flags);
         }
 
-        if (!is_array($flags)) {
+        if (!is_array($flags) || empty($flags)) {
             return false;
         }
 
@@ -307,6 +307,39 @@ class CacheFlagService extends BaseApplicationComponent
         }
 
         return false;
+
+    }
+
+    public function flagsHasCaches($flags = '')
+    {
+
+        if (!$flags || $flags == '') {
+            return false;
+        }
+
+        if (is_string($flags)) {
+            $flags = explode(',', $flags);
+        }
+
+        if (!is_array($flags) || empty($flags)) {
+            return false;
+        }
+
+        $query = craft()->db->createCommand();
+        $query->select('cacheId');
+        $query->from('templatecaches_flagged');
+
+        foreach ($flags as $flag) {
+            $query->orWhere('FIND_IN_SET("' . $flag . '",flags)');
+        }
+
+        $result = $query->queryAll();
+
+        if (!$result || empty($result)) {
+            return false;
+        }
+
+        return true;
 
     }
 
