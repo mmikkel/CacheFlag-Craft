@@ -115,12 +115,18 @@ class CacheFlagPlugin extends BasePlugin
         craft()->on('elements.saveElement', array($this, 'onSaveElement'));
         craft()->on('elements.beforeDeleteElements', array($this, 'onBeforeDeleteElements'));
         craft()->on('elements.performAction', array($this, 'onPerformAction'));
+        craft()->on('structures.onMoveElement', array($this, 'onMoveElement'));
     }
 
     /*
     *   Event handlers
     *
     */
+    public function onMoveElement(Event $event)
+    {
+        craft()->cacheFlag->deleteFlaggedCachesByElement($event->params['element']);
+    }
+
     public function onSaveElement(Event $event)
     {
         craft()->cacheFlag->deleteFlaggedCachesByElement($event->params['element']);
