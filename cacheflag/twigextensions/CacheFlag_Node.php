@@ -106,10 +106,7 @@ class CacheFlag_Node extends \Twig_Node
         }
 
         $compiler
-            ->raw(", \$cacheBody{$n});\n")
-            ->outdent()
-            ->write("}\n")
-            ->outdent();
+            ->raw(", \$cacheBody{$n});\n");
 
         if ($flags) {
             $compiler->write("\$cacheFlagService->addCacheByKey(\$cacheKey{$n}, ");
@@ -118,6 +115,9 @@ class CacheFlag_Node extends \Twig_Node
         }
 
         $compiler
+            ->outdent()
+            ->write("}\n")
+            ->outdent()
             ->write("}\n")
             ->write("echo \$cacheBody{$n};\n");
 
