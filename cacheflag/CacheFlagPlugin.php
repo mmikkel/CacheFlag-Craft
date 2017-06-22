@@ -27,7 +27,7 @@ class CacheFlagPlugin extends BasePlugin
 
     public function getName()
     {
-        return $this->_name;
+        return Craft::t($this->_name);
     }
 
     public function getVersion()
