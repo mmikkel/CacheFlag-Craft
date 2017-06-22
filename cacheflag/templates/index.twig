@@ -20,7 +20,7 @@
         </header>
 
         {% if targets is defined and targets|length %}
-            <form class="cacheFlag-form" method="post" accept-charset="UTF-8" data-saveshortcut>
+            <form class="cacheFlag-form" method="post" accept-charset="UTF-8" data-saveshortcut data-csrf-name="{{ craft.config.csrfTokenName }}" data-csrf-token="{{ craft.request.csrfToken }}">
 
                 {{ getCsrfInput() }}
 

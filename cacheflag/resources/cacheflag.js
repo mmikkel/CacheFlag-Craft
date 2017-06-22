@@ -56,7 +56,6 @@ $(function () {
 
     function clearCaches(e)
     {
-
         e.preventDefault();
 
         var actionUrl = Craft.getActionUrl('cacheFlag/clearCachesByFlags'),
@@ -64,12 +63,16 @@ $(function () {
             flags = $target.data('emptycache');
 
         if ($target.hasClass('disabled') || !flags || flags == '') return false;
+        
+        var data = {
+            flags : flags
+        };
+        
+        data[$form.data('csrf-name')] = $form.data('csrf-token'); 
 
         $.ajax(actionUrl, {
             type : 'POST',
-            data : {
-                flags : flags
-            },
+            data : data,
             success: function (response) {
                 if (response.success) {
                     Craft.cp.displayNotice(response.message);
