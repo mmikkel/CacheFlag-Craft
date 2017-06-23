@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.1.4",
+        "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
+        "date": "2017-06-23T14:00:00-08:00",
+        "notes": [
+            "[Fixed] Fixes an issue where clearing individual flags would fail when CSRF was enabled (thanks @aelvan)",
+            "[Fixed] Fixes an issue w/ Live Preview (thanks @mjatharvest)"
+        ]
+    },
+    {
         "version": "1.1.3",
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2016-05-23T14:00:00-08:00",
