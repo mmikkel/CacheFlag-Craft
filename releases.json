@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.1.5",
+        "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
+        "date": "2017-06-23T14:00:00-08:00",
+        "notes": [
+            "[Fixed] Fixes an issue where CacheFlag would potentially create a lot of database queries when a keyed, non-global template cache was made global",
+        ]
+    },
+    {
         "version": "1.1.4",
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2017-06-23T14:00:00-08:00",

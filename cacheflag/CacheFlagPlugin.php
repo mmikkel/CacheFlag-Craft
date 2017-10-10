@@ -14,7 +14,7 @@
 class CacheFlagPlugin extends BasePlugin
 {
 
-    protected $_version = '1.1.4',
+    protected $_version = '1.1.5',
         $_schemaVersion = '1.0',
         $_name = 'Cache Flag',
         $_url = 'https://github.com/mmikkel/CacheFlag-Craft',

@@ -88,6 +88,7 @@ class CacheFlag_CacheService extends BaseApplicationComponent
     {
         $args = array(
             'cacheKey' => $key,
+            'path' => null,
         );
         if (!$global) {
             $args['path'] = $this->_getPath();
