@@ -1,8 +1,16 @@
 [
     {
+        "version": "1.1.6",
+        "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
+        "date": "2017-10-10T14:00:00-08:00",
+        "notes": [
+            "[Fixed] Fixes a regression error introduced in CacheFlag 1.1.5 – thanks @aelvan!",
+        ]
+    },
+    {
         "version": "1.1.5",
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
-        "date": "2017-06-23T14:00:00-08:00",
+        "date": "2017-10-10T14:00:00-08:00",
         "notes": [
             "[Fixed] Fixes an issue where CacheFlag would potentially create a lot of database queries when a keyed, non-global template cache was made global",
         ]
