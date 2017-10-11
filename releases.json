@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.1.7",
+        "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
+        "date": "2017-10-11T14:00:00-08:00",
+        "notes": [
+            "[Fixed] *Really* fixes the regression error introduced in CacheFlag 1.1.5",
+        ]
+    },
+    {
         "version": "1.1.6",
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2017-10-10T14:00:00-08:00",

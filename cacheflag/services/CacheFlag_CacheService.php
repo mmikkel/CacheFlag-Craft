@@ -89,14 +89,15 @@ class CacheFlag_CacheService extends BaseApplicationComponent
         $args = array(
             'cacheKey' => $key,
         );
-        if ($global) {
-            $args[] = 'path is null';
-        } else {
+        if (!$global) {
             $args['path'] = $this->_getPath();
         }
         $query = craft()->db->createCommand();
         $query->from('templatecaches');
         $query->where($args);
+        if ($global) {
+            $query->andWhere('path is null');
+        }
         return $query->queryAll();
     }
 
