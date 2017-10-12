@@ -14,7 +14,7 @@
 class CacheFlagPlugin extends BasePlugin
 {
 
-    protected $_version = '1.1.7',
+    protected $_version = '1.1.8',
         $_schemaVersion = '1.0',
         $_name = 'Cache Flag',
         $_url = 'https://github.com/mmikkel/CacheFlag-Craft',
@@ -102,7 +102,7 @@ class CacheFlagPlugin extends BasePlugin
     {
         parent::init();
 
-        if (!craft()->request->isCpRequest() || !$this->isCraftRequiredVersion()) {
+        if (!$this->isCraftRequiredVersion()) {
             return false;
         }
 
