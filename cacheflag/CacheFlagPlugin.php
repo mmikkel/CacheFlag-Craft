@@ -102,7 +102,7 @@ class CacheFlagPlugin extends BasePlugin
     {
         parent::init();
 
-        if (!craft()->request->isCpRequest() || !$this->isCraftRequiredVersion()) {
+        if (!(craft()->request->isCpRequest() || craft()->isConsole()) || !$this->isCraftRequiredVersion()) {
             return false;
         }
 
