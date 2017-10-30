@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.1.9",
+        "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
+        "date": "2017-10-30T14:00:00-08:00",
+        "notes": [
+            "[Fixed] Fixes a Live Preview related issue – thanks @michaelramuta!",
+        ]
+    },
+    {
         "version": "1.1.8",
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2017-10-12T14:00:00-08:00",
