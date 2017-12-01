@@ -66,7 +66,7 @@ public function onDeleteFlaggedCaches(Event $event)
     
     // ...custom logic, e.g. cache warming for the affected flags etc
 }
-``
+```
 
 
 ### Changelog`
