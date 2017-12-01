@@ -1,4 +1,4 @@
-# Cache Flag v. 1.1.9 plugin for Craft CMS
+# Cache Flag v. 1.1.10 plugin for Craft CMS
 
 The native ```{% cache %}``` tag is great, but in some cases the element queries Craft creates to clear the caches can become too complex, which can bog down your system. Cache Flag provides an alternative (and in most cases, more performant) way to have your caches clear automatically when your content changes.
 
@@ -36,8 +36,44 @@ Suppose you also want to have the above cache cleared whenever a _category_ in a
 
 Beyond the ```flagged``` parameter, the ```{% cacheflag %}``` tag _supports all the same parameters_ as the native ```{% cache %}``` tag – so I'll just refer to [the official documentation for the latter](http://buildwithcraft.com/docs/templating/cache).
 
+### Events
 
-### Changelog
+Cache Flag dispatches two events:
+
+* `cacheFlag.beforeDeleteFlaggedCaches`  
+
+Dispatches just before Cache Flag deletes one or several template caches by flag.  
+
+Event parameters: `flags` (array of flags having caches deleted), `ids` (the IDs of all the templatecaches being deleted) and `result` (either `false` or the number of rows affected in `craft_templatecaches`).   
+
+* `cacheFlag.deleteFlaggedCaches`  
+
+Dispatches immediately after Cache Flag has deleted one or several template caches by flag.  
+
+Event parameters: `flags` (array of flags having caches deleted), `ids` (the IDs of all the templatecaches being deleted) and `result` (either `false` or the number of rows affected in `craft_templatecaches`).  
+
+#### Listening to events
+
+Listening to the Cache Flag events work as you'd expect:  
+
+```php
+craft()->on('cacheFlag.deleteFlaggedCaches', [$this, 'onDeleteFlaggedCaches']);
+...
+
+public function onDeleteFlaggedCaches(Event $event)
+{
+    $flags = $event->params['flags'];
+    
+    // ...custom logic, e.g. cache warming for the affected flags etc
+}
+``
+
+
+### Changelog`
+
+#### Version 1.1.10 – 12.01.17
+
+* Adds `cacheFlag.beforeDeleteFlaggedCaches` and `cacheFlag.deleteFlaggedCaches` events
 
 #### Version 1.1.9 – 10.30.17
 

@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.1.10",
+        "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
+        "date": "2017-12-01T14:00:00-08:00",
+        "notes": [
+            "[Added] Adds cacheFlag.beforeDeleteFlaggedCaches and cacheFlag.deleteFlaggedCaches events",
+        ]
+    },
+    {
         "version": "1.1.9",
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2017-10-30T14:00:00-08:00",

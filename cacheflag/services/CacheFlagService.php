@@ -254,30 +254,16 @@ class CacheFlagService extends BaseApplicationComponent
         }
 
         $query = craft()->db->createCommand();
-        $query->select('cacheId');
+        $query->select(['cacheId', 'flags']);
         $query->from('templatecaches_flagged');
 
         foreach ($flags as $flag) {
             $query->orWhere('FIND_IN_SET("' . $flag . '",flags)');
         }
 
-        $result = $query->queryAll();
+        $rows = $query->queryAll();
 
-        if (!$result || empty($result)) {
-            return false;
-        }
-
-        $cacheIds = [];
-
-        foreach ($result as $row) {
-            $cacheIds[] = (int)$row['cacheId'];
-        }
-
-        if (!empty($cacheIds)) {
-            return craft()->templateCache->deleteCacheById($cacheIds);
-        }
-
-        return false;
+        return $this->deleteCaches($rows);
 
     }
 
@@ -288,28 +274,65 @@ class CacheFlagService extends BaseApplicationComponent
     {
 
         $query = craft()->db->createCommand();
-        $query->select('cacheId');
+        $query->select(['cacheId', 'flags']);
         $query->from('templatecaches_flagged');
 
-        $result = $query->queryAll();
+        $rows = $query->queryAll();
 
-        if (!$result || empty($result)) {
+        return $this->deleteCaches($rows);
+
+    }
+
+    protected function deleteCaches(array $rows)
+    {
+
+        if (!$rows || empty($rows)) {
             return false;
         }
 
         $cacheIds = [];
-        foreach ($result as $row) {
-            $cacheIds[] = (int)$row['cacheId'];
+        $cacheFlags = [];
+
+        foreach ($rows as $row) {
+            $cacheIds[] = (int) $row['cacheId'];
+            $cacheFlags = array_merge($cacheFlags, explode(',', $row['flags']));
         }
+
+        $result = false;
 
         if (!empty($cacheIds)) {
-            return craft()->templateCache->deleteCacheById($cacheIds);
+
+            Craft::import('plugins.cacheflag.events.CacheFlag_OnBeforeDeleteFlaggedCachesEvent');
+            Craft::import('plugins.cacheflag.events.CacheFlag_OnDeleteFlaggedCachesEvent');
+
+            $cacheFlags = array_unique(array_filter($cacheFlags));
+
+            $event = new CacheFlag_OnBeforeDeleteFlaggedCachesEvent($this, [
+                'ids' => $cacheIds,
+                'flags' => $cacheFlags,
+            ]);
+
+            $this->onBeforeDeleteFlaggedCaches($event);
+
+            $result = craft()->templateCache->deleteCacheById($cacheIds);
+
+            $event = new CacheFlag_OnDeleteFlaggedCachesEvent($this, [
+                'ids' => $cacheIds,
+                'flags' => $cacheFlags,
+                'result' => $result,
+            ]);
+
+            $this->onDeleteFlaggedCaches($event);
         }
 
-        return false;
+        return $result;
 
     }
 
+    /**
+     * @param string $flags
+     * @return bool
+     */
     public function flagsHasCaches($flags = '')
     {
 
@@ -341,6 +364,22 @@ class CacheFlagService extends BaseApplicationComponent
 
         return true;
 
+    }
+
+    /**
+     * @param CacheFlag_OnBeforeDeleteFlaggedCachesEvent $event
+     */
+    public function onBeforeDeleteFlaggedCaches(CacheFlag_OnBeforeDeleteFlaggedCachesEvent $event)
+    {
+        $this->raiseEvent('onBeforeDeleteFlaggedCaches', $event);
+    }
+
+    /**
+     * @param CacheFlag_OnDeleteFlaggedCachesEvent $event
+     */
+    public function onDeleteFlaggedCaches(CacheFlag_OnDeleteFlaggedCachesEvent $event)
+    {
+        $this->raiseEvent('onDeleteFlaggedCaches', $event);
     }
 
     /*
