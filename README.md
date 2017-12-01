@@ -44,7 +44,7 @@ Cache Flag dispatches two events:
 
 Dispatches just before Cache Flag deletes one or several template caches by flag.  
 
-Event parameters: `flags` (array of flags having caches deleted), `ids` (the IDs of all the templatecaches being deleted) and `result` (either `false` or the number of rows affected in `craft_templatecaches`).   
+Event parameters: `flags` (array of flags having caches deleted) and `ids` (the IDs of all the templatecaches being deleted)   
 
 * `cacheFlag.deleteFlaggedCaches`  
 
