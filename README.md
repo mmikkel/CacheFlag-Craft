@@ -71,6 +71,10 @@ public function onDeleteFlaggedCaches(Event $event)
 
 ### Changelog`
 
+#### Version 1.1.11 – 03.04.18
+
+* Fixes an issue where custom element types might return the wrong element type
+
 #### Version 1.1.10 – 12.01.17
 
 * Adds `cacheFlag.beforeDeleteFlaggedCaches` and `cacheFlag.deleteFlaggedCaches` events

@@ -31,7 +31,7 @@ class CacheFlagService extends BaseApplicationComponent
      */
     public function getCpTabs()
     {
-        return array(
+        return [
             'cacheFlagIndex' => array(
                 'label' => '',
                 'url' => UrlHelper::getUrl('cacheflag'),
@@ -40,7 +40,7 @@ class CacheFlagService extends BaseApplicationComponent
                 'label' => Craft::t('About'),
                 'url' => UrlHelper::getUrl('cacheflag/about'),
             ),
-        );
+        ];
     }
 
     /**
@@ -106,7 +106,7 @@ class CacheFlagService extends BaseApplicationComponent
     }
 
     /**
-     * @param $id
+     * @param int|string $id
      * @return null
      */
     public function getFlagsById($id)
@@ -116,7 +116,7 @@ class CacheFlagService extends BaseApplicationComponent
     }
 
     /**
-     * @param $id
+     * @param int|string $id
      * @return bool
      * @throws \Exception
      */
@@ -163,13 +163,13 @@ class CacheFlagService extends BaseApplicationComponent
     }
 
     /**
-     * @param $element
+     * @param BaseElementModel $element
      * @return bool
      */
-    public function deleteFlaggedCachesByElement($element)
+    public function deleteFlaggedCachesByElement(BaseElementModel $element)
     {
 
-        $elementType = $element->elementType;
+        $elementType = $element->getElementType();
 
         // Get flagged caches for element
         $query = craft()->db->createCommand();
@@ -239,7 +239,7 @@ class CacheFlagService extends BaseApplicationComponent
     }
 
     /**
-     * @param $flags
+     * @param string|array $flags
      * @return bool
      */
     public function deleteFlaggedCachesByFlags($flags)
@@ -283,6 +283,10 @@ class CacheFlagService extends BaseApplicationComponent
 
     }
 
+    /**
+     * @param array $rows
+     * @return bool
+     */
     protected function deleteCaches(array $rows)
     {
 
@@ -294,7 +298,7 @@ class CacheFlagService extends BaseApplicationComponent
         $cacheFlags = [];
 
         foreach ($rows as $row) {
-            $cacheIds[] = (int) $row['cacheId'];
+            $cacheIds[] = (int)$row['cacheId'];
             $cacheFlags = array_merge($cacheFlags, explode(',', $row['flags']));
         }
 
@@ -330,7 +334,7 @@ class CacheFlagService extends BaseApplicationComponent
     }
 
     /**
-     * @param string $flags
+     * @param string|array $flags
      * @return bool
      */
     public function flagsHasCaches($flags = '')

@@ -1,10 +1,18 @@
 [
     {
+        "version": "1.1.11",
+        "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
+        "date": "2018-03-04T14:00:00-08:00",
+        "notes": [
+            "[Fixed] Fixes an issue where custom element types might return the wrong element type"
+        ]
+    },
+    {
         "version": "1.1.10",
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2017-12-01T14:00:00-08:00",
         "notes": [
-            "[Added] Adds cacheFlag.beforeDeleteFlaggedCaches and cacheFlag.deleteFlaggedCaches events",
+            "[Added] Adds cacheFlag.beforeDeleteFlaggedCaches and cacheFlag.deleteFlaggedCaches events"
         ]
     },
     {
@@ -12,7 +20,7 @@
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2017-10-30T14:00:00-08:00",
         "notes": [
-            "[Fixed] Fixes a Live Preview related issue – thanks @michaelramuta!",
+            "[Fixed] Fixes a Live Preview related issue – thanks @michaelramuta!"
         ]
     },
     {
@@ -20,7 +28,7 @@
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2017-10-12T14:00:00-08:00",
         "notes": [
-            "[Fixed] Fixes an issue where programmatically busting the cache using console commands or non-CP HTTP requests was impossible",
+            "[Fixed] Fixes an issue where programmatically busting the cache using console commands or non-CP HTTP requests was impossible"
         ]
     },
     {
@@ -28,7 +36,7 @@
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2017-10-11T14:00:00-08:00",
         "notes": [
-            "[Fixed] *Really* fixes the regression error introduced in CacheFlag 1.1.5",
+            "[Fixed] *Really* fixes the regression error introduced in CacheFlag 1.1.5"
         ]
     },
     {
@@ -36,7 +44,7 @@
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2017-10-10T14:00:00-08:00",
         "notes": [
-            "[Fixed] Fixes a regression error introduced in CacheFlag 1.1.5 – thanks @aelvan!",
+            "[Fixed] Fixes a regression error introduced in CacheFlag 1.1.5 – thanks @aelvan!"
         ]
     },
     {
@@ -44,7 +52,7 @@
         "downloadUrl": "https://github.com/mmikkel/CacheFlag-Craft/archive/master.zip",
         "date": "2017-10-10T14:00:00-08:00",
         "notes": [
-            "[Fixed] Fixes an issue where CacheFlag would potentially create a lot of database queries when a keyed, non-global template cache was made global",
+            "[Fixed] Fixes an issue where CacheFlag would potentially create a lot of database queries when a keyed, non-global template cache was made global"
         ]
     },
     {

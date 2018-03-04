@@ -14,83 +14,155 @@
 class CacheFlagPlugin extends BasePlugin
 {
 
-    protected $_version = '1.1.10',
-        $_schemaVersion = '1.0',
-        $_name = 'Cache Flag',
-        $_url = 'https://github.com/mmikkel/CacheFlag-Craft',
-        $_releaseFeedUrl = 'https://raw.githubusercontent.com/mmikkel/CacheFlag-Craft/master/releases.json',
-        $_documentationUrl = 'https://github.com/mmikkel/CacheFlag-Craft/blob/master/README.md',
-        $_description = 'Flag and clear template caches without element criteria.',
-        $_developer = 'Mats Mikkel Rummelhoff',
-        $_developerUrl = 'http://mmikkel.no',
-        $_minVersion = '2.4';
+    /**
+     * @var string
+     */
+    protected $_version = '1.1.11';
+    /**
+     * @var string
+     */
+    protected $_schemaVersion = '1.0';
+    /**
+     * @var string
+     */
+    protected $_name = 'Cache Flag';
+    /**
+     * @var string
+     */
+    protected $_url = 'https://github.com/mmikkel/CacheFlag-Craft';
+    /**
+     * @var string
+     */
+    protected $_releaseFeedUrl = 'https://raw.githubusercontent.com/mmikkel/CacheFlag-Craft/master/releases.json';
+    /**
+     * @var string
+     */
+    protected $_documentationUrl = 'https://github.com/mmikkel/CacheFlag-Craft/blob/master/README.md';
+    /**
+     * @var string
+     */
+    protected $_description = 'Flag and clear template caches without element criteria.';
+    /**
+     * @var string
+     */
+    protected $_developer = 'Mats Mikkel Rummelhoff';
+    /**
+     * @var string
+     */
+    protected $_developerUrl = 'http://mmikkel.no';
+    /**
+     * @var string
+     */
+    protected $_minVersion = '2.4';
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return Craft::t($this->_name);
     }
 
+    /**
+     * @return string
+     */
     public function getVersion()
     {
         return $this->_version;
     }
 
+    /**
+     * @return string
+     */
     public function getSchemaVersion()
     {
         return $this->_schemaVersion;
     }
 
+    /**
+     * @return string
+     */
     public function getUrl()
     {
         return $this->_url;
     }
 
+    /**
+     * @return string
+     */
     public function getReleaseFeedUrl()
     {
         return $this->_releaseFeedUrl;
     }
 
+    /**
+     * @return string
+     */
     public function getDocumentationUrl()
     {
         return $this->_documentationUrl;
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return $this->_description;
     }
 
+    /**
+     * @return string
+     */
     public function getDeveloper()
     {
         return $this->_developer;
     }
 
+    /**
+     * @return string
+     */
     public function getDeveloperUrl()
     {
         return $this->_developerUrl;
     }
 
+    /**
+     * @return bool
+     */
     public function hasCpSection()
     {
         return true;
     }
 
+    /**
+     * @return string
+     */
     public function getCraftRequiredVersion()
     {
         return $this->_minVersion;
     }
 
+    /**
+     * @return mixed
+     */
     public function isCraftRequiredVersion()
     {
         return version_compare(craft()->getVersion(), $this->getCraftRequiredVersion(), '>=');
     }
 
+    /**
+     * @return CacheFlagTwigExtension
+     */
     public function addTwigExtension()
     {
         Craft::import('plugins.cacheflag.twigextensions.*');
         return new CacheFlagTwigExtension();
     }
 
+    /**
+     * @return array
+     */
     public function registerCpRoutes()
     {
         return array(
@@ -98,6 +170,9 @@ class CacheFlagPlugin extends BasePlugin
         );
     }
 
+    /**
+     * @return bool
+     */
     public function init()
     {
         parent::init();
@@ -110,6 +185,9 @@ class CacheFlagPlugin extends BasePlugin
 
     }
 
+    /**
+     *
+     */
     protected function addEventListeners()
     {
         craft()->on('elements.saveElement', array($this, 'onSaveElement'));
@@ -122,16 +200,25 @@ class CacheFlagPlugin extends BasePlugin
     *   Event handlers
     *
     */
+    /**
+     * @param Event $event
+     */
     public function onMoveElement(Event $event)
     {
         craft()->cacheFlag->deleteFlaggedCachesByElement($event->params['element']);
     }
 
+    /**
+     * @param Event $event
+     */
     public function onSaveElement(Event $event)
     {
         craft()->cacheFlag->deleteFlaggedCachesByElement($event->params['element']);
     }
 
+    /**
+     * @param Event $event
+     */
     public function onBeforeDeleteElements(Event $event)
     {
         $elementIds = $event->params['elementIds'];
@@ -142,6 +229,9 @@ class CacheFlagPlugin extends BasePlugin
         }
     }
 
+    /**
+     * @param Event $event
+     */
     public function onPerformAction(Event $event)
     {
 
